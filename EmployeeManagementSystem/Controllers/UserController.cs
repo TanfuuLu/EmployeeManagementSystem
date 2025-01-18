@@ -27,7 +27,7 @@ public class UserController : ControllerBase {
 		this.mapper = mapper;
 	}
 
-	[HttpPost("user/login")]
+	[HttpPost("login")]
 	public async Task<IActionResult> Login([FromBody]LoginRequestModel model) {
 		var user = await userManager.FindByEmailAsync(model.username);
 		if(user == null) {
@@ -47,7 +47,18 @@ public class UserController : ControllerBase {
 		return Ok(token + "\n" + user.FullName);
 
 	}
-	[HttpPost("user/register")]
+	[HttpPost("information")]
+	public async Task<IActionResult> GetLoginUser(string employeeEmail) {
+		var user = await userManager.FindByEmailAsync(employeeEmail);
+		var userMap = mapper.Map<ReadUserModel>(user);
+		if(user == null) {
+			return NotFound();
+		}
+		return Ok(userMap);
+	}
+	
+
+	[HttpPost("register")]
 	public async Task<IActionResult> Register([FromBody] RegisterRequestModel model) {
 		
 		var employeeCode = EmployeeCodeAuto(model.FullName, model.DateOfBirth);

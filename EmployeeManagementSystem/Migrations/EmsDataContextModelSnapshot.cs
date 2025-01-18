@@ -172,13 +172,13 @@ namespace EmployeeManagementSystem.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SalaryId"));
 
-                    b.Property<int>("BaseSalary")
+                    b.Property<int?>("BaseSalary")
                         .HasColumnType("integer");
 
                     b.Property<string>("SalaryEmployeeCode")
                         .HasColumnType("text");
 
-                    b.Property<int>("TotalSalary")
+                    b.Property<int?>("TotalSalary")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TotalWorkday")

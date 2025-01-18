@@ -48,8 +48,8 @@ namespace EmployeeManagementSystem.Migrations
                 {
                     SalaryId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    BaseSalary = table.Column<int>(type: "integer", nullable: false),
-                    TotalSalary = table.Column<int>(type: "integer", nullable: false),
+                    BaseSalary = table.Column<int>(type: "integer", nullable: true),
+                    TotalSalary = table.Column<int>(type: "integer", nullable: true),
                     WorkdayHistory = table.Column<List<string>>(type: "text[]", nullable: true),
                     TotalWorkday = table.Column<int>(type: "integer", nullable: true),
                     SalaryEmployeeCode = table.Column<string>(type: "text", nullable: true)

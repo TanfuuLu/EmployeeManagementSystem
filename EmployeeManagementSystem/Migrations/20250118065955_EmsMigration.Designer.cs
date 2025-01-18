@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EmployeeManagementSystem.Migrations
 {
     [DbContext(typeof(EmsDataContext))]
-    [Migration("20250117071833_EmsMigration")]
+    [Migration("20250118065955_EmsMigration")]
     partial class EmsMigration
     {
         /// <inheritdoc />
@@ -175,13 +175,13 @@ namespace EmployeeManagementSystem.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SalaryId"));
 
-                    b.Property<int>("BaseSalary")
+                    b.Property<int?>("BaseSalary")
                         .HasColumnType("integer");
 
                     b.Property<string>("SalaryEmployeeCode")
                         .HasColumnType("text");
 
-                    b.Property<int>("TotalSalary")
+                    b.Property<int?>("TotalSalary")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TotalWorkday")

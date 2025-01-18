@@ -3,6 +3,8 @@ using EmployeeManagementSystem.Mapper;
 using EmployeeManagementSystem.Model;
 using EmployeeManagementSystem.Services;
 using EmployeeManagementSystem.Services.RepoPattern;
+using EmployeeManagementSystem.Services.RepoPattern.EmployeeServices;
+using EmployeeManagementSystem.Services.RepoPattern.HRServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +28,7 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IPositionRepository, PositionRepository>();
 builder.Services.AddScoped<IHRServiceRepository, HRServiceRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 //Config cho identity entity 
 builder.Services.AddIdentity<Employee, IdentityRole>(options => {
