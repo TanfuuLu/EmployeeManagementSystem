@@ -21,7 +21,15 @@ public class EmployeeRepository : IEmployeeRepository {
 		return findEmployee;
 	}
 
-	
+	public async Task<LeaveWork> DeleteRequestLeaveWork(int leaveId) {
+		var findRequest = await dbContext.Leaveworks.FirstOrDefaultAsync(r => r.LeaveId == leaveId);
+		if(findRequest == null) {
+			return null;
+		}
+		dbContext.Leaveworks.Remove(findRequest);
+		await dbContext.SaveChangesAsync();
+		return findRequest;
+	}
 
 	public async Task<List<Employee>> GetEmployeeByDepartment(int department) {
 		var listEmployee = await dbContext.Employees.Where(s => s.DepartmentId == department)
@@ -37,6 +45,25 @@ public class EmployeeRepository : IEmployeeRepository {
 			.Include(e => e.Position)
 			.ToListAsync();
 		return listEmployee;
+	}
+
+	public async Task<List<LeaveWork>> GetLeaveWorkByEmployeeCode(string EmployeeCode) {
+		var requestList = await dbContext.Leaveworks.Where(r => r.EmployeeCode == EmployeeCode).ToListAsync();
+		return requestList;
+	}
+
+	public Task<LeaveWork> GetLeaveWorkRequestById(int leaveId) {
+		var findRequest = dbContext.Leaveworks.FirstOrDefaultAsync(r => r.LeaveId == leaveId);	  
+		if(findRequest == null) {
+			return null;
+		}
+		return findRequest;
+	}
+
+	public async Task<LeaveWork> RequestLeaveWork(LeaveWork leaveWork) {
+		dbContext.Leaveworks.Add(leaveWork);
+		await dbContext.SaveChangesAsync();
+		return leaveWork;
 	}
 
 	public async Task<Employee> UpdateEmployee(Employee employeeUpdate, string employeeCode) {

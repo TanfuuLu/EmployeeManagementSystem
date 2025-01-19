@@ -13,6 +13,5 @@ public interface IHRServiceRepository {
 	Task<Employee> DeleteEmployee(string employeeCode); 
 	Task<List<Employee>> GetAllEmployee();
 
-
 }
 

@@ -13,5 +13,6 @@ public class MapperProfile : Profile {
 		CreateMap<Employee,ReadUserModel>().ReverseMap();
 		CreateMap<Salary,UpdateSalaryDTO>().ReverseMap();
 		CreateMap<Employee, UpdateEmployeeDTO>().ReverseMap();
+		CreateMap<LeaveWork, CreateLeaveWorkDTO>().ReverseMap();
 	}
 }
