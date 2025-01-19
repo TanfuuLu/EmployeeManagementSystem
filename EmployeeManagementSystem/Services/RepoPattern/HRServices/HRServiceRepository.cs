@@ -102,4 +102,14 @@ public class HRServiceRepository : IHRServiceRepository {
 		await dbContext.SaveChangesAsync();
 		return workHistory;
 	}
+
+	public async Task<List<LeaveWork>> GetLeaveWorksByStatus(string status) {
+		var listLeaveWork = await dbContext.Leaveworks.Where(r => r.Status == status).ToListAsync();
+		return listLeaveWork;
+	}
+
+	public async Task<List<LeaveWork>> GetLeaveWorksByEmployeeCode(string employeeCode) {
+		var listLeaveWork = await dbContext.Leaveworks.Where(r => r.EmployeeCode == employeeCode).ToListAsync();
+		return listLeaveWork;
+	}
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EmployeeManagementSystem.Model;
+using EmployeeManagementSystem.Model.DTO;
 using EmployeeManagementSystem.Model.DTO.EmployeeServiceDTO;
 using EmployeeManagementSystem.Services.RepoPattern.EmployeeServices;
 using Microsoft.AspNetCore.Http;
@@ -36,4 +37,24 @@ public class EmployeeController : ControllerBase {
 		}
 		return Ok(employeeUpdate);
 	}
+	[HttpPost("request-leave-work")]
+	public async Task<IActionResult> RequestLeaveWork([FromBody] CreateLeaveWorkDTO leaveWork) {
+		var itemDTO = mapper.Map<LeaveWork>(leaveWork);
+		var leaveWorkRequest = await employeeRepository.RequestLeaveWork(itemDTO);
+		return Ok(leaveWorkRequest);
+	}
+	[HttpPost("delete-request-leave-work/{leaveId}")]
+	public async Task<IActionResult> DeleteRequestLeaveWork(string employeeCode) {
+		var leaveWorkRequest = await employeeRepository.DeleteRequestLeaveWork(employeeCode);
+		if(leaveWorkRequest == null) {
+			return NotFound();
+		}
+		return Ok(leaveWorkRequest);
+	}
+	[HttpGet("get-leavework-by-employee-code/{EmployeeCode}")]
+	public async Task<IActionResult> GetLeaveWorkByEmployeeCode(string EmployeeCode) {
+		var listLeaveWork = await employeeRepository.GetLeaveWorkByEmployeeCode(EmployeeCode);
+		return Ok(listLeaveWork);
+	}
+
 }

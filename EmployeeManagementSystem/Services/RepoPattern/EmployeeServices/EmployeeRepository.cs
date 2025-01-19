@@ -11,22 +11,14 @@ public class EmployeeRepository : IEmployeeRepository {
 		this.dbContext = dbContext;
 	}
 
-	public async Task<Employee> DeleteEmployee(string employeeCode) {
-		var findEmployee = await dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeCode == employeeCode);
-		if(findEmployee == null) {
-			return null;
-		}
-		dbContext.Employees.Remove(findEmployee);
-		await dbContext.SaveChangesAsync();
-		return findEmployee;
-	}
-
-	public async Task<LeaveWork> DeleteRequestLeaveWork(int leaveId) {
-		var findRequest = await dbContext.Leaveworks.FirstOrDefaultAsync(r => r.LeaveId == leaveId);
+	public async Task<LeaveWork> DeleteRequestLeaveWork(string employeeCode) {
+		var findRequest = await dbContext.Leaveworks.FirstOrDefaultAsync(r => r.EmployeeCode == employeeCode);
 		if(findRequest == null) {
 			return null;
 		}
 		dbContext.Leaveworks.Remove(findRequest);
+		var employee = await dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeCode == employeeCode);
+		employee.TotalLeaveWork -= 1;
 		await dbContext.SaveChangesAsync();
 		return findRequest;
 	}
@@ -52,16 +44,10 @@ public class EmployeeRepository : IEmployeeRepository {
 		return requestList;
 	}
 
-	public Task<LeaveWork> GetLeaveWorkRequestById(int leaveId) {
-		var findRequest = dbContext.Leaveworks.FirstOrDefaultAsync(r => r.LeaveId == leaveId);	  
-		if(findRequest == null) {
-			return null;
-		}
-		return findRequest;
-	}
-
 	public async Task<LeaveWork> RequestLeaveWork(LeaveWork leaveWork) {
 		dbContext.Leaveworks.Add(leaveWork);
+		var employee = await dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeCode == leaveWork.EmployeeCode);
+		employee.TotalLeaveWork += 1;
 		await dbContext.SaveChangesAsync();
 		return leaveWork;
 	}

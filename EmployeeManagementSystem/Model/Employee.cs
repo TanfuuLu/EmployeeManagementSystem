@@ -11,7 +11,7 @@ public class Employee : IdentityUser {
 	public DateTime? StartWorkDate {  get; set; }
 	public string? Status { get; set; }
 	public string? LevelWork {  get; set; }
-
+	public int? TotalLeaveWork { get; set; } = 0;
 	//Foreign Key
 	public int DepartmentId {  get; set; }
 	public Department? Department { get; set; }
