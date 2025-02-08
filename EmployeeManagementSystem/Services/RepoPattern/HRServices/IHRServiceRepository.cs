@@ -12,6 +12,7 @@ public interface IHRServiceRepository {
 	Task<List<Salary>> ResetTotalSalaryEmployee();
 	Task<Employee> DeleteEmployee(string employeeCode); 
 	Task<List<Employee>> GetAllEmployee();
+	Task<Employee> GetEmployeeByCode(string code);
 	Task<List<LeaveWork>> GetLeaveWorksByStatus(string status);
 	Task<List<LeaveWork>> GetLeaveWorksByEmployeeCode(string employeeCode);
 

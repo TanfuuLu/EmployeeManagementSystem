@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using EmployeeManagementSystem.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EmployeeManagementSystem.Migrations
 {
     [DbContext(typeof(EmsDataContext))]
-    partial class EmsDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250207080313_EMSMigration_v3")]
+    partial class EMSMigration_v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

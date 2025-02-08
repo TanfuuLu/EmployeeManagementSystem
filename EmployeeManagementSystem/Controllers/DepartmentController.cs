@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagementSystem.Controllers;
-[Route("api/[controller]")]
+[Route("")]
 [ApiController]
+//Phòng ban
 public class DepartmentController : ControllerBase {
 	private readonly IDepartmentRepository departmentRepository;
 	private readonly IMapper mapper;

@@ -12,6 +12,7 @@ using System.Globalization;
 namespace EmployeeManagementSystem.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+//Quản lý đăng nhập người dùng, xác thực qua token
 public class UserController : ControllerBase {
 	private readonly UserManager<Employee> userManager;
 	private readonly TokenJWTGenerator tokenJWTGenerator;
@@ -30,25 +31,27 @@ public class UserController : ControllerBase {
 	[HttpPost("login")]
 	public async Task<IActionResult> Login([FromBody]LoginRequestModel model) {
 		var user = await userManager.FindByEmailAsync(model.username);
+
 		if(user == null) {
 			return NotFound();
-		}else if(await userManager.CheckPasswordAsync(user, model.password)){
-			return Unauthorized("Invalid email or password");
 		}
-		var roles = await userManager.GetRolesAsync(user);
-		var token = tokenJWTGenerator.JwtGeneratorToken(user, roles);
-		Response.Cookies.Append("AuthToken", token, new CookieOptions {
-			HttpOnly = true,
-			Secure = true, // Bắt buộc nếu chạy HTTPS
-			SameSite = SameSiteMode.None, // Dùng None nếu cross-origin
-			Expires = DateTimeOffset.UtcNow.AddHours(2)
-		});
+		if(await userManager.CheckPasswordAsync(user, model.password)){
+			var roles = await userManager.GetRolesAsync(user);
+			var token = tokenJWTGenerator.JwtGeneratorToken(user, roles);
+			Response.Cookies.Append("AuthToken", token, new CookieOptions {
+				HttpOnly = true,
+				Secure = true, // Bắt buộc nếu chạy HTTPS
+				SameSite = SameSiteMode.None, // Dùng None nếu cross-origin
+				Expires = DateTimeOffset.UtcNow.AddHours(2)
+			});
 
-		return Ok(token + "\n" + user.FullName);
+			return Ok(token + "\n" + user.FullName);
+		}
+		return Unauthorized("Invalid email or password");
 
 	}
 	[HttpPost("information")]
-	public async Task<IActionResult> GetLoginUser(string employeeEmail) {
+	public async Task<IActionResult> GetLoginUser([FromBody]string employeeEmail) {
 		var user = await userManager.FindByEmailAsync(employeeEmail);
 		var userMap = mapper.Map<ReadUserModel>(user);
 		if(user == null) {

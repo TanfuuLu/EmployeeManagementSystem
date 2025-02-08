@@ -15,6 +15,7 @@ public class HRServiceRepository : IHRServiceRepository {
 		var listEmployee = await dbContext.Employees.Include(s => s.Salary).Include(s => s.Department).Include(s => s.Position).ToListAsync();
 		return listEmployee;
 	}
+	
 	public async Task<Employee> DeleteEmployee(string employeeCode) {
 		var findEmployee = await dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeCode == employeeCode);
 		if(findEmployee == null) {
@@ -111,5 +112,13 @@ public class HRServiceRepository : IHRServiceRepository {
 	public async Task<List<LeaveWork>> GetLeaveWorksByEmployeeCode(string employeeCode) {
 		var listLeaveWork = await dbContext.Leaveworks.Where(r => r.EmployeeCode == employeeCode).ToListAsync();
 		return listLeaveWork;
+	}
+
+	public async Task<Employee> GetEmployeeByCode(string code) {
+		var findEmployee = await dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeCode == code);
+		if(findEmployee == null) {
+			return null;
+		}
+		return findEmployee;
 	}
 }

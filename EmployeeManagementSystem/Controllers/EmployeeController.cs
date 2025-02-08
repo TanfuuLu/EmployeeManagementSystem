@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmployeeManagementSystem.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+//Quản lý nhân viên
 public class EmployeeController : ControllerBase {
 	private readonly IEmployeeRepository employeeRepository;
 	private readonly IMapper mapper;

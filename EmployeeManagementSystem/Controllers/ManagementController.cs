@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagementSystem.Controllers;
-[Route("api/[controller]")]
+[Route("api/")]
 [ApiController]
+//Quản lý về lương.
 public class ManagementController : ControllerBase {
 	private readonly IHRServiceRepository hrRepository;
 	private readonly IMapper mapper;
@@ -69,4 +70,13 @@ public class ManagementController : ControllerBase {
 		var listEmployee = await hrRepository.GetAllEmployee();
 		return Ok(listEmployee);
 	}
+	[HttpGet("employee/get-employee-by-code")]
+	public async Task<IActionResult> GetEmployeByCode(string code) {
+		var employee = await hrRepository.GetEmployeeByCode(code);
+		if(employee != null) {
+			return Ok(employee);
+		}
+		return NotFound("Employee not found");
+	}
+
 }

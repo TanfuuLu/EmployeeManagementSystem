@@ -13,6 +13,7 @@ public class EmsDataContext : IdentityDbContext<Employee> {
 	public DbSet<Position> Positions { get; set; }
 	public DbSet<Salary> Salaries { get; set; }
 	public DbSet<LeaveWork> Leaveworks { get; set; }
+	public DbSet<Interviews> Interviews { get; set; }
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);
 
